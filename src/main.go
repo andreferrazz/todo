@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -14,7 +13,7 @@ type Task struct {
 }
 
 func main() {
-	fmt.Println("Server started")
+	log.Print("Server started")
 
 	tasks := []Task{
 		{Id: 1, Title: "Task 1 blablabla", IsDone: true},
@@ -23,14 +22,14 @@ func main() {
 	}
 
 	rootHandler := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("index.html", "task.html"))
+		tmpl := template.Must(template.ParseFiles("src/templates/index.html", "src/templates/task.html"))
 		tmpl.Execute(w, tasks)
 	}
 
 	createHandler := func(w http.ResponseWriter, r *http.Request) {
 		title := r.PostFormValue("title")
 		task := Task{Id: 4, Title: title, IsDone: false}
-		tmpl := template.Must(template.ParseFiles("task.html"))
+		tmpl := template.Must(template.ParseFiles("src/templates/task.html"))
 		tmpl.ExecuteTemplate(w, "task", task)
 	}
 
