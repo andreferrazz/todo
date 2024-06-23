@@ -3,5 +3,9 @@ Basic to-do web app
 
 # ISSUES
 
-- [ ] Configure a local libSQL database  
-- [ ] Save tasks in the database
+- [ ] Add pico CSS  
+- [ ] Toggle task completion  
+- [ ] Updade task description  
+- [x] Configure a local libSQL database  
+- [x] Read all tasks from the database  
+- [x] Save tasks in the database  
