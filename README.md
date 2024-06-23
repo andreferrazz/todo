@@ -3,5 +3,5 @@ Basic to-do web app
 
 # ISSUES
 
-[ ] Configure a local libSQL database 
+[ ] Configure a local libSQL database  
 [ ] Save tasks in the database
