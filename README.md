@@ -1,7 +1,7 @@
 # TO-DO
 Basic to-do web app
 
-## ISSUES
+## Issues
 
 - [ ] Add pico CSS  
 - [ ] Toggle task completion  
@@ -27,7 +27,7 @@ See the file `.tool-versions` at the project root folder.
 
 By default, the program will open a local connection with a local.db file in the project root.
 
-#### Environment variables
+#### Environment Variables
 
 Create a copy of `.env-example` and rename it to `.env`. Fill the empty values if needed.
 
