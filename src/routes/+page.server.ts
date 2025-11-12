@@ -23,7 +23,11 @@ export const actions = {
             checkedAt: null
         }
 
-        await save(todo)
+        const id = await save(todo)
+
+        return {
+            todo: await getOne(id)
+        }
     },
     check: async ({ request }) => {
         const formData = await request.formData()

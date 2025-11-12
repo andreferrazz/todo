@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { Todo } from '$lib/todo';
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	let everyDayForms: HTMLFormElement[] = $state([]);
 	let todayForms: HTMLFormElement[] = $state([]);
@@ -10,7 +11,7 @@
 	const anotherDay = $state(data.todos.filter(({ everyDay, today }) => !everyDay && !today));
 </script>
 
-<div class="m-auto max-w-xl px-4">
+<div class="m-auto max-w-xl px-4 pb-20">
 	<p class="mt-10 mb-2 text-xl font-bold">Every day</p>
 	{#each everyDay as todo, i}
 		<form
@@ -35,7 +36,20 @@
 			</label>
 		</form>
 	{/each}
-	<form method="POST" action="?/create" class="mt-4">
+	<form
+		method="POST"
+		action="?/create"
+		class="mt-4"
+		use:enhance={({ formData }) => {
+			everyDay.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			return async ({ update }) => {
+				await update();
+				if (form?.todo) {
+					everyDay[everyDay.length - 1] = form?.todo;
+				}
+			};
+		}}
+	>
 		<input name="displayText" type="text" placeholder="Add..." class="w-full" />
 		<input name="everyDay" value={true} type="hidden" />
 		<input name="today" value={false} type="hidden" />
@@ -65,7 +79,20 @@
 			</label>
 		</form>
 	{/each}
-	<form method="POST" action="?/create" class="mt-4">
+	<form
+		method="POST"
+		action="?/create"
+		class="mt-4"
+		use:enhance={({ formData }) => {
+			today.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			return async ({ update }) => {
+				await update();
+				if (form?.todo) {
+					today[today.length - 1] = form?.todo;
+				}
+			};
+		}}
+	>
 		<input name="displayText" type="text" placeholder="Add..." class="w-full" />
 		<input name="everyDay" value={false} type="hidden" />
 		<input name="today" value={true} type="hidden" />
@@ -78,7 +105,20 @@
 			{todo.displayText}
 		</label>
 	{/each}
-	<form method="POST" action="?/create" class="mt-4">
+	<form
+		method="POST"
+		action="?/create"
+		class="mt-4"
+		use:enhance={({ formData }) => {
+			anotherDay.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			return async ({ update }) => {
+				await update();
+				if (form?.todo) {
+					anotherDay[anotherDay.length - 1] = form?.todo;
+				}
+			};
+		}}
+	>
 		<input name="displayText" type="text" placeholder="Add..." class="w-full" />
 		<input name="everyDay" value={false} type="hidden" />
 		<input name="today" value={false} type="hidden" />
