@@ -13,6 +13,26 @@ export async function save(todo: any) {
         .then(result => result.insertedId.toString())
 }
 
+export async function update(todo: Todo) {
+    return client
+        .db(MONGODB_DATABASE)
+        .collection(COLLECTION)
+        .updateOne(
+            { _id: new ObjectId(todo._id) },
+            {
+                $set: {
+                    displayText: todo.displayText,
+                    everyDay: todo.everyDay,
+                    today: todo.today,
+                    checked: todo.checked,
+                    checkedAt: todo.checkedAt,
+                    updatedAt: new Date(),
+                }
+            }
+        )
+        .then(result => result.acknowledged)
+}
+
 export async function getAll() {
     return client
         .db(MONGODB_DATABASE)

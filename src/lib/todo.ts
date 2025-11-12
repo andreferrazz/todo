@@ -5,7 +5,7 @@ export type Todo = {
     checked: boolean,
     everyDay: boolean,
     today: boolean,
-    createdAt: boolean,
-    updatedAt: boolean,
-    checkedAt: boolean,
+    createdAt: Date,
+    updatedAt: Date,
+    checkedAt: Date,
 }
