@@ -11,10 +11,6 @@ FROM node:24-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ARG MONGODB_URI
-ARG MONGODB_DATABASE
-ENV MONGODB_URI=${MONGODB_URI}
-ENV MONGODB_DATABASE=${MONGODB_DATABASE}
 ENV NODE_ENV=production
 RUN npm run build
 
