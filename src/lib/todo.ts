@@ -8,4 +8,5 @@ export type Todo = {
     createdAt: Date,
     updatedAt: Date,
     checkedAt: Date,
+    deleted: boolean,
 }

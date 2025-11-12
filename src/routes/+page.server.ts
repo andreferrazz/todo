@@ -18,6 +18,7 @@ export const actions = {
             everyDay: (formData.get('everyDay') || null) === 'true',
             today: (formData.get('today') || null) === 'true',
             checked: false,
+            deleted: false,
             createdAt: new Date(),
             updatedAt: null,
             checkedAt: null

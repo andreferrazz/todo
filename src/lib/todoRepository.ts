@@ -25,6 +25,7 @@ export async function update(todo: Todo) {
                     everyDay: todo.everyDay,
                     today: todo.today,
                     checked: todo.checked,
+                    deleted: todo.deleted,
                     checkedAt: todo.checkedAt,
                     updatedAt: new Date(),
                 }
