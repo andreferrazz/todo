@@ -8,7 +8,9 @@
 	let todayForms: HTMLFormElement[] = $state([]);
 	const everyDay = $state(data.todos.filter(({ everyDay }) => everyDay));
 	const today = $state(data.todos.filter(({ today }) => today));
-	const anotherDay = $state(data.todos.filter(({ everyDay, today }) => !everyDay && !today));
+	const anotherDay = $state(
+		data.todos.filter(({ everyDay, today, checked }) => !everyDay && !today && !checked)
+	);
 </script>
 
 <div class="m-auto max-w-xl px-4 pb-20">
@@ -55,7 +57,14 @@
 		<input name="today" value={false} type="hidden" />
 	</form>
 
-	<p class="mt-10 mb-2 text-xl font-bold">Today</p>
+	<div class="mt-10 mb-2 flex items-center gap-4">
+		<p class="text-xl font-bold">Today</p>
+		<form method="POST" action="?/dismissToday" use:enhance>
+			<button class="cursor-pointer p-2 text-sm text-blue-600 underline">
+				Dismiss all checked
+			</button>
+		</form>
+	</div>
 	{#each today as todo, i}
 		<form
 			method="POST"
@@ -101,7 +110,7 @@
 	<p class="mt-10 mb-2 text-xl font-bold">Another day</p>
 	{#each anotherDay as todo}
 		<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-			<input type="checkbox" value={todo.checked} disabled />
+			<input type="checkbox" defaultChecked={todo.checked} disabled />
 			{todo.displayText}
 		</label>
 	{/each}

@@ -50,5 +50,17 @@ export const actions = {
         todo.checkedAt = new Date()
 
         await update(todo)
+    },
+    dismissToday: async () => {
+        const todos = await getAll()
+            .then(e => e.filter(t => t.today && t.checked))
+
+        for (let todo of todos) {
+            todo.today = false
+            const success = await update(todo)
+            if (!success) {
+                console.error(`Could not update todo wit id ${todo._id}`);
+            }
+        }
     }
 }
