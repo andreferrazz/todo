@@ -109,10 +109,19 @@
 
 	<p class="mt-10 mb-2 text-xl font-bold">Another day</p>
 	{#each anotherDay as todo}
-		<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-			<input type="checkbox" defaultChecked={todo.checked} disabled />
-			{todo.displayText}
-		</label>
+		<div class="flex items-center gap-4">
+			<form method="POST" action="?/move" use:enhance>
+				<input name="id" value={todo._id} type="hidden" />
+				<input name="today" type="hidden" />
+				<button aria-label="Arrow up" class="h-5 w-5 rounded-full bg-blue-600 text-xs text-white cursor-pointer">
+					<i class="fa-solid fa-arrow-up"></i>
+				</button>
+			</form>
+			<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+				<input type="checkbox" defaultChecked={todo.checked} disabled />
+				{todo.displayText}
+			</label>
+		</div>
 	{/each}
 	<form
 		method="POST"

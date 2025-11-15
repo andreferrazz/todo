@@ -62,5 +62,17 @@ export const actions = {
                 console.error(`Could not update todo wit id ${todo._id}`);
             }
         }
+    },
+    move: async ({ request }) => {
+        const data = await request.formData()
+        const todo = await getOne(data.get('id')?.toString()!)
+
+        if (!todo) {
+            return fail(404, { error: 'To-do not found' })
+        }
+
+        todo.today = data.has('today') || todo.today
+        todo.everyDay = data.has('everyDay') || todo.everyDay
+        await update(todo)
     }
 }
