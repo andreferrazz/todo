@@ -6,10 +6,11 @@
 
 	let everyDayForms: HTMLFormElement[] = $state([]);
 	let todayForms: HTMLFormElement[] = $state([]);
-	const everyDay = $state(data.todos.filter(({ everyDay }) => everyDay));
-	const today = $state(data.todos.filter(({ today }) => today));
-	const anotherDay = $state(
-		data.todos.filter(({ everyDay, today, checked }) => !everyDay && !today && !checked)
+	let todos = $state(data.todos);
+	let everyDay = $derived(todos.filter(({ everyDay }) => everyDay));
+	let today = $derived(todos.filter(({ today }) => today));
+	let anotherDay = $derived(
+		todos.filter(({ everyDay, today, checked }) => !everyDay && !today && !checked)
 	);
 </script>
 
@@ -110,10 +111,39 @@
 	<p class="mt-10 mb-2 text-xl font-bold">Another day</p>
 	{#each anotherDay as todo}
 		<div class="flex items-center gap-4">
-			<form method="POST" action="?/move" use:enhance>
+			<form
+				method="POST"
+				action="?/move"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.today = true;
+						await update();
+					}}
+			>
 				<input name="id" value={todo._id} type="hidden" />
 				<input name="today" type="hidden" />
-				<button aria-label="Arrow up" class="h-5 w-5 rounded-full bg-blue-600 text-xs text-white cursor-pointer">
+				<button
+					aria-label="Arrow up"
+					class="h-5 w-5 cursor-pointer rounded-full bg-blue-600 text-xs text-white"
+				>
+					<i class="fa-solid fa-arrow-up"></i>
+				</button>
+			</form>
+			<form
+				method="POST"
+				action="?/move"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.everyDay = true;
+						await update();
+					}}
+			>
+				<input name="id" value={todo._id} type="hidden" />
+				<input name="everyDay" type="hidden" />
+				<button
+					aria-label="Arrow up"
+					class="h-5 w-5 cursor-pointer rounded-full bg-green-600 text-xs text-white"
+				>
 					<i class="fa-solid fa-arrow-up"></i>
 				</button>
 			</form>
