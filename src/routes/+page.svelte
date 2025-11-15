@@ -44,11 +44,14 @@
 		action="?/create"
 		class="mt-4"
 		use:enhance={({ formData }) => {
-			everyDay.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			todos.push({
+				displayText: formData.get('displayText')!.toString(),
+				everyDay: true
+			} as Todo);
 			return async ({ update }) => {
 				await update();
 				if (form?.todo) {
-					everyDay[everyDay.length - 1] = form?.todo;
+					todos[todos.length - 1] = form?.todo;
 				}
 			};
 		}}
@@ -94,11 +97,14 @@
 		action="?/create"
 		class="mt-4"
 		use:enhance={({ formData }) => {
-			today.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			todos.push({
+				displayText: formData.get('displayText')!.toString(),
+				today: true
+			} as Todo);
 			return async ({ update }) => {
 				await update();
 				if (form?.todo) {
-					today[today.length - 1] = form?.todo;
+					todos[todos.length - 1] = form?.todo;
 				}
 			};
 		}}
@@ -158,11 +164,11 @@
 		action="?/create"
 		class="mt-4"
 		use:enhance={({ formData }) => {
-			anotherDay.push({ displayText: formData.get('displayText')!.toString() } as Todo);
+			todos.push({ displayText: formData.get('displayText')!.toString() } as Todo);
 			return async ({ update }) => {
 				await update();
 				if (form?.todo) {
-					anotherDay[anotherDay.length - 1] = form?.todo;
+					todos[todos.length - 1] = form?.todo;
 				}
 			};
 		}}
