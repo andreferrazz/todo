@@ -30,6 +30,26 @@ export const actions = {
             todo: await getOne(id)
         }
     },
+    update: async ({ request }) => {
+        const formData = await request.formData()
+
+        const id = formData.get('id')?.toString().trim() || null
+        const displayText = formData.get('displayText')?.toString().trim() || null
+
+        if (!id || !displayText) {
+            return fail(500, { error: 'Input validation error' })
+        }
+
+        const todo = await getOne(id)
+
+        if (!todo) {
+            return fail(404, { error: 'Todo not found' })
+        }
+
+        todo.displayText = displayText
+
+        await update(todo)
+    },
     check: async ({ request }) => {
         const formData = await request.formData()
 
