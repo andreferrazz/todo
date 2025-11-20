@@ -162,27 +162,77 @@
 					<i class="fa-solid fa-arrow-down"></i>
 				</button>
 			</form>
-			<form
-				method="POST"
-				action="?/check"
-				use:enhance={() =>
-					async ({ update }) => {
-						todo.checked = !todo.checked;
-						await update();
+			{#if editTodo === todo._id}
+				<form
+					bind:this={editForm}
+					class="w-full"
+					method="POST"
+					action="?/update"
+					use:enhance={({ formData, cancel }) => {
+						if (isSubmitting) {
+							cancel();
+						}
+						isSubmitting = true;
+						return async ({ update }) => {
+							todo.displayText = formData.get('displayText')!.toString().trim();
+							editTodo = null;
+							await update();
+							isSubmitting = false;
+						};
 					}}
-				bind:this={todayForms[i]}
-			>
-				<input name="id" value={todo._id} type="hidden" />
-				<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+				>
+					<input name="id" value={todo._id} type="hidden" />
 					<input
-						name="checked"
-						type="checkbox"
-						defaultChecked={todo.checked}
-						oninput={() => todayForms[i]!.requestSubmit()}
+						bind:this={editInput}
+						name="displayText"
+						value={todo.displayText}
+						type="text"
+						class="w-full"
+						onblur={() => editForm.requestSubmit()}
 					/>
-					{todo.displayText}
-				</label>
-			</form>
+				</form>
+			{:else}
+				<form
+					class="group flex w-full items-center justify-between gap-4"
+					method="POST"
+					action="?/check"
+					use:enhance={() =>
+						async ({ update }) => {
+							todo.checked = !todo.checked;
+							await update();
+						}}
+					bind:this={todayForms[i]}
+				>
+					<input name="id" value={todo._id} type="hidden" />
+					<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+						<input
+							name="checked"
+							type="checkbox"
+							defaultChecked={todo.checked}
+							oninput={() => todayForms[i]!.requestSubmit()}
+						/>
+						{todo.displayText}
+					</label>
+					<button
+						onclick={() => {
+							editTodo = todo._id;
+							setTimeout(() => editInput.focus(), 1);
+						}}
+						type="button"
+						aria-label="Arrow down"
+						class="
+						h-7
+						w-7
+						cursor-pointer
+						text-xs
+						text-transparent
+						group-hover:text-blue-200
+						hover:text-blue-600"
+					>
+						<i class="fa-solid fa-pen"></i>
+					</button>
+				</form>
+			{/if}
 		</div>
 	{/each}
 	<form
@@ -246,10 +296,61 @@
 					<i class="fa-solid fa-arrow-up"></i>
 				</button>
 			</form>
-			<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-				<input type="checkbox" defaultChecked={todo.checked} disabled />
-				{todo.displayText}
-			</label>
+			{#if editTodo === todo._id}
+				<form
+					bind:this={editForm}
+					class="w-full"
+					method="POST"
+					action="?/update"
+					use:enhance={({ formData, cancel }) => {
+						if (isSubmitting) {
+							cancel();
+						}
+						isSubmitting = true;
+						return async ({ update }) => {
+							todo.displayText = formData.get('displayText')!.toString().trim();
+							editTodo = null;
+							await update();
+							isSubmitting = false;
+						};
+					}}
+				>
+					<input name="id" value={todo._id} type="hidden" />
+					<input
+						bind:this={editInput}
+						name="displayText"
+						value={todo.displayText}
+						type="text"
+						class="w-full"
+						onblur={() => editForm.requestSubmit()}
+					/>
+				</form>
+			{:else}
+				<div class="group w-full flex items-center justify-between">
+					<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+						<input type="checkbox" defaultChecked={todo.checked} disabled />
+						{todo.displayText}
+					</label>
+					<button
+						onclick={() => {
+							editTodo = todo._id;
+							setTimeout(() => editInput.focus(), 1);
+						}}
+						type="button"
+						aria-label="Arrow down"
+						class="
+						h-7
+						w-7
+						cursor-pointer
+						text-xs
+						text-transparent
+						group-hover:text-blue-200
+						hover:text-blue-600"
+					>
+						<i class="fa-solid fa-pen"></i>
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/each}
 	<form
