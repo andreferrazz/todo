@@ -326,7 +326,7 @@
 					/>
 				</form>
 			{:else}
-				<div class="group w-full flex items-center justify-between">
+				<div class="group flex w-full items-center justify-between">
 					<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
 						<input type="checkbox" defaultChecked={todo.checked} disabled />
 						{todo.displayText}
@@ -339,13 +339,13 @@
 						type="button"
 						aria-label="Arrow down"
 						class="
-						h-7
-						w-7
-						cursor-pointer
-						text-xs
-						text-transparent
-						group-hover:text-blue-200
-						hover:text-blue-600"
+							h-7
+							w-7
+							cursor-pointer
+							text-xs
+							text-transparent
+							group-hover:text-blue-200
+							hover:text-blue-600"
 					>
 						<i class="fa-solid fa-pen"></i>
 					</button>
