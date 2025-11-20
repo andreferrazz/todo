@@ -71,8 +71,8 @@ export const actions = {
             return fail(404, { error: 'To-do not found' })
         }
 
-        todo.today = data.has('today') || todo.today
-        todo.everyDay = data.has('everyDay') || todo.everyDay
+        todo.today = data.has('today')
+        todo.everyDay = data.has('everyDay')
         await update(todo)
     }
 }

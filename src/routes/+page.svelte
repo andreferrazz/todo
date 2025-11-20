@@ -17,27 +17,46 @@
 <div class="m-auto max-w-xl px-4 pb-20">
 	<p class="mt-10 mb-2 text-xl font-bold">Every day</p>
 	{#each everyDay as todo, i}
-		<form
-			method="POST"
-			action="?/check"
-			use:enhance={() =>
-				async ({ update }) => {
-					todo.checked = !todo.checked;
-					await update();
-				}}
-			bind:this={everyDayForms[i]}
-		>
-			<input name="id" value={todo._id} type="hidden" />
-			<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-				<input
-					name="checked"
-					type="checkbox"
-					defaultChecked={todo.checked}
-					oninput={() => everyDayForms[i]!.requestSubmit()}
-				/>
-				{todo.displayText}
-			</label>
-		</form>
+		<div class="flex items-center gap-4">
+			<form
+				method="POST"
+				action="?/move"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.everyDay = false;
+						await update();
+					}}
+			>
+				<input name="id" value={todo._id} type="hidden" />
+				<button
+					aria-label="Arrow down"
+					class="h-5 w-5 cursor-pointer rounded-full bg-red-400 text-xs text-white"
+				>
+					<i class="fa-solid fa-arrow-down"></i>
+				</button>
+			</form>
+			<form
+				method="POST"
+				action="?/check"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.checked = !todo.checked;
+						await update();
+					}}
+				bind:this={everyDayForms[i]}
+			>
+				<input name="id" value={todo._id} type="hidden" />
+				<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+					<input
+						name="checked"
+						type="checkbox"
+						defaultChecked={todo.checked}
+						oninput={() => everyDayForms[i]!.requestSubmit()}
+					/>
+					{todo.displayText}
+				</label>
+			</form>
+		</div>
 	{/each}
 	<form
 		method="POST"
@@ -70,27 +89,46 @@
 		</form>
 	</div>
 	{#each today as todo, i}
-		<form
-			method="POST"
-			action="?/check"
-			use:enhance={() =>
-				async ({ update }) => {
-					todo.checked = !todo.checked;
-					await update();
-				}}
-			bind:this={todayForms[i]}
-		>
-			<input name="id" value={todo._id} type="hidden" />
-			<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-				<input
-					name="checked"
-					type="checkbox"
-					defaultChecked={todo.checked}
-					oninput={() => todayForms[i]!.requestSubmit()}
-				/>
-				{todo.displayText}
-			</label>
-		</form>
+		<div class="flex items-center gap-4">
+			<form
+				method="POST"
+				action="?/move"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.today = false;
+						await update();
+					}}
+			>
+				<input name="id" value={todo._id} type="hidden" />
+				<button
+					aria-label="Arrow down"
+					class="h-5 w-5 cursor-pointer rounded-full bg-red-400 text-xs text-white"
+				>
+					<i class="fa-solid fa-arrow-down"></i>
+				</button>
+			</form>
+			<form
+				method="POST"
+				action="?/check"
+				use:enhance={() =>
+					async ({ update }) => {
+						todo.checked = !todo.checked;
+						await update();
+					}}
+				bind:this={todayForms[i]}
+			>
+				<input name="id" value={todo._id} type="hidden" />
+				<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+					<input
+						name="checked"
+						type="checkbox"
+						defaultChecked={todo.checked}
+						oninput={() => todayForms[i]!.requestSubmit()}
+					/>
+					{todo.displayText}
+				</label>
+			</form>
+		</div>
 	{/each}
 	<form
 		method="POST"
@@ -148,7 +186,7 @@
 				<input name="everyDay" type="hidden" />
 				<button
 					aria-label="Arrow up"
-					class="h-5 w-5 cursor-pointer rounded-full bg-green-600 text-xs text-white"
+					class="h-5 w-5 cursor-pointer rounded-full bg-green-700 text-xs text-white"
 				>
 					<i class="fa-solid fa-arrow-up"></i>
 				</button>
