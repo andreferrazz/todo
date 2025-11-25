@@ -137,7 +137,7 @@
 
 	<div class="mt-10 mb-2 flex items-center gap-4">
 		<p class="text-xl font-bold">Today</p>
-		<form method="POST" action="?/dismissToday" use:enhance>
+		<form method="POST" action="?/dismissToday">
 			<button class="cursor-pointer p-2 text-sm text-blue-600 underline">
 				Dismiss all checked
 			</button>
