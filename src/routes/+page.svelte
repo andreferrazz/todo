@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Action from '$lib/components/Action.svelte';
 	import type { Todo } from '$lib/todo';
 
 	let { data, form } = $props();
@@ -22,24 +23,6 @@
 	<p class="mt-10 mb-2 text-xl font-bold">Every day</p>
 	{#each everyDay as todo, i}
 		<div class="flex items-center gap-4">
-			<form
-				method="POST"
-				action="?/move"
-				use:enhance={() =>
-					async ({ update }) => {
-						todo.everyDay = false;
-						await update();
-					}}
-			>
-				<input name="id" value={todo._id} type="hidden" />
-				<button
-					aria-label="Arrow down"
-					class="h-5 w-5 cursor-pointer rounded-full bg-red-400 text-xs text-white"
-				>
-					<i class="fa-solid fa-arrow-down"></i>
-				</button>
-			</form>
-
 			{#if editTodo === todo._id}
 				<form
 					bind:this={editForm}
@@ -70,46 +53,49 @@
 					/>
 				</form>
 			{:else}
-				<form
-					class="group flex w-full items-center justify-between gap-4"
-					method="POST"
-					action="?/check"
-					use:enhance={() =>
-						async ({ update }) => {
-							todo.checked = !todo.checked;
-							await update();
-						}}
-					bind:this={everyDayForms[i]}
-				>
-					<input name="id" value={todo._id} type="hidden" />
-					<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-						<input
-							name="checked"
-							type="checkbox"
-							defaultChecked={todo.checked}
-							oninput={() => everyDayForms[i]!.requestSubmit()}
-						/>
-						{todo.displayText}
-					</label>
-					<button
-						onclick={() => {
-							editTodo = todo._id;
-							setTimeout(() => editInput.focus(), 1);
-						}}
-						type="button"
-						aria-label="Arrow down"
-						class="
-						h-7
-						w-7
-						cursor-pointer
-						text-xs
-						text-transparent
-						group-hover:text-blue-200
-						hover:text-blue-600"
+				<div class="group flex w-full items-center justify-between gap-4">
+					<form
+						class="group flex w-full items-center justify-between gap-4"
+						method="POST"
+						action="?/check"
+						use:enhance={() =>
+							async ({ update }) => {
+								todo.checked = !todo.checked;
+								await update();
+							}}
+						bind:this={everyDayForms[i]}
 					>
-						<i class="fa-solid fa-pen"></i>
-					</button>
-				</form>
+						<input name="id" value={todo._id} type="hidden" />
+						<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+							<input
+								name="checked"
+								type="checkbox"
+								defaultChecked={todo.checked}
+								oninput={() => everyDayForms[i]!.requestSubmit()}
+							/>
+							{todo.displayText}
+						</label>
+					</form>
+					<div class="flex gap-1">
+						<Action
+							type="button"
+							color="blue"
+							icon="pen"
+							onclick={() => {
+								editTodo = todo._id;
+								setTimeout(() => editInput.focus(), 1);
+							}}
+						/>
+						<Action
+							type="form"
+							color="red"
+							icon="arrow-down"
+							action="moveToAnother"
+							todoid={todo._id}
+							aftersubmit={() => (todo.everyDay = false)}
+						/>
+					</div>
+				</div>
 			{/if}
 		</div>
 	{/each}
@@ -145,23 +131,6 @@
 	</div>
 	{#each today as todo, i}
 		<div class="flex items-center gap-4">
-			<form
-				method="POST"
-				action="?/move"
-				use:enhance={() =>
-					async ({ update }) => {
-						todo.today = false;
-						await update();
-					}}
-			>
-				<input name="id" value={todo._id} type="hidden" />
-				<button
-					aria-label="Arrow down"
-					class="h-5 w-5 cursor-pointer rounded-full bg-red-400 text-xs text-white"
-				>
-					<i class="fa-solid fa-arrow-down"></i>
-				</button>
-			</form>
 			{#if editTodo === todo._id}
 				<form
 					bind:this={editForm}
@@ -192,46 +161,49 @@
 					/>
 				</form>
 			{:else}
-				<form
-					class="group flex w-full items-center justify-between gap-4"
-					method="POST"
-					action="?/check"
-					use:enhance={() =>
-						async ({ update }) => {
-							todo.checked = !todo.checked;
-							await update();
-						}}
-					bind:this={todayForms[i]}
-				>
-					<input name="id" value={todo._id} type="hidden" />
-					<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
-						<input
-							name="checked"
-							type="checkbox"
-							defaultChecked={todo.checked}
-							oninput={() => todayForms[i]!.requestSubmit()}
-						/>
-						{todo.displayText}
-					</label>
-					<button
-						onclick={() => {
-							editTodo = todo._id;
-							setTimeout(() => editInput.focus(), 1);
-						}}
-						type="button"
-						aria-label="Arrow down"
-						class="
-						h-7
-						w-7
-						cursor-pointer
-						text-xs
-						text-transparent
-						group-hover:text-blue-200
-						hover:text-blue-600"
+				<div class="group flex w-full items-center justify-between gap-4">
+					<form
+						class="flex w-full items-center justify-between gap-4"
+						method="POST"
+						action="?/check"
+						use:enhance={() =>
+							async ({ update }) => {
+								todo.checked = !todo.checked;
+								await update();
+							}}
+						bind:this={todayForms[i]}
 					>
-						<i class="fa-solid fa-pen"></i>
-					</button>
-				</form>
+						<input name="id" value={todo._id} type="hidden" />
+						<label for="checked" class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+							<input
+								name="checked"
+								type="checkbox"
+								defaultChecked={todo.checked}
+								oninput={() => todayForms[i]!.requestSubmit()}
+							/>
+							{todo.displayText}
+						</label>
+					</form>
+					<div class="flex gap-1">
+						<Action
+							type="button"
+							color="blue"
+							icon="pen"
+							onclick={() => {
+								editTodo = todo._id;
+								setTimeout(() => editInput.focus(), 1);
+							}}
+						/>
+						<Action
+							type="form"
+							color="red"
+							icon="arrow-down"
+							action="moveToAnother"
+							todoid={todo._id}
+							aftersubmit={() => (todo.today = false)}
+						/>
+					</div>
+				</div>
 			{/if}
 		</div>
 	{/each}
@@ -260,42 +232,6 @@
 	<p class="mt-10 mb-2 text-xl font-bold">Another day</p>
 	{#each anotherDay as todo}
 		<div class="flex items-center gap-4">
-			<form
-				method="POST"
-				action="?/move"
-				use:enhance={() =>
-					async ({ update }) => {
-						todo.today = true;
-						await update();
-					}}
-			>
-				<input name="id" value={todo._id} type="hidden" />
-				<input name="today" type="hidden" />
-				<button
-					aria-label="Arrow up"
-					class="h-5 w-5 cursor-pointer rounded-full bg-blue-600 text-xs text-white"
-				>
-					<i class="fa-solid fa-arrow-up"></i>
-				</button>
-			</form>
-			<form
-				method="POST"
-				action="?/move"
-				use:enhance={() =>
-					async ({ update }) => {
-						todo.everyDay = true;
-						await update();
-					}}
-			>
-				<input name="id" value={todo._id} type="hidden" />
-				<input name="everyDay" type="hidden" />
-				<button
-					aria-label="Arrow up"
-					class="h-5 w-5 cursor-pointer rounded-full bg-green-700 text-xs text-white"
-				>
-					<i class="fa-solid fa-arrow-up"></i>
-				</button>
-			</form>
 			{#if editTodo === todo._id}
 				<form
 					bind:this={editForm}
@@ -327,28 +263,43 @@
 				</form>
 			{:else}
 				<div class="group flex w-full items-center justify-between">
-					<label class="flex h-10 w-max max-w-full items-center gap-2 leading-none">
+					<label class="flex h-10 w-max max-w-full grow items-center gap-2 leading-none">
 						<input type="checkbox" defaultChecked={todo.checked} disabled />
 						{todo.displayText}
 					</label>
-					<button
+					<Action
+						type="button"
+						color="blue"
+						icon="pen"
 						onclick={() => {
 							editTodo = todo._id;
 							setTimeout(() => editInput.focus(), 1);
 						}}
-						type="button"
-						aria-label="Arrow down"
-						class="
-							h-7
-							w-7
-							cursor-pointer
-							text-xs
-							text-transparent
-							group-hover:text-blue-200
-							hover:text-blue-600"
-					>
-						<i class="fa-solid fa-pen"></i>
-					</button>
+					/>
+					<Action
+						type="form"
+						color="blue"
+						icon="arrow-up"
+						action="moveToToday"
+						todoid={todo._id}
+						aftersubmit={() => (todo.today = true)}
+					/>
+					<Action
+						type="form"
+						color="green"
+						icon="arrow-up"
+						action="moveToEvery"
+						todoid={todo._id}
+						aftersubmit={() => (todo.everyDay = true)}
+					/>
+					<Action
+						type="form"
+						color="red"
+						icon="cancel"
+						action="cancel"
+						todoid={todo._id}
+						aftersubmit={() => {}}
+					/>
 				</div>
 			{/if}
 		</div>
