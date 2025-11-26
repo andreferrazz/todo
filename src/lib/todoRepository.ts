@@ -38,7 +38,7 @@ export async function getAll() {
     return client
         .db(MONGODB_DATABASE)
         .collection(COLLECTION)
-        .find({})
+        .find({ deleted: false })
         .toArray()
         .then(documents => documents.map(fromDocument) as Todo[])
 }

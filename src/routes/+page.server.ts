@@ -94,5 +94,16 @@ export const actions = {
         todo.today = data.has('today')
         todo.everyDay = data.has('everyDay')
         await update(todo)
+    },
+    cancel: async ({ request }) => {
+        const data = await request.formData()
+        const todo = await getOne(data.get('id')?.toString()!)
+
+        if (!todo) {
+            return fail(404, { error: 'To-do not found' })
+        }
+
+        todo.deleted = true
+        await update(todo)
     }
 }

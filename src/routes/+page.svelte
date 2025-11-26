@@ -22,7 +22,7 @@
 	}
 
 	function hideTodo(todo: Todo) {
-		todos = todos.filter((t) => t._id === todo._id);
+		todos = todos.filter((t) => t._id !== todo._id);
 	}
 
 	function showNewTodo(todo: Todo) {
