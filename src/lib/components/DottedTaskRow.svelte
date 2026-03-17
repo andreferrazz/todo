@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Task } from '$lib/types.js';
 	import InlineEdit from './InlineEdit.svelte';
-	import { undot, complete, reenter } from '$lib/taskStore.svelte.js';
+	import { undot, complete, reenter } from '$lib/stores/taskStore.svelte.js';
 
 	let { task }: { task: Task } = $props();
 	let reentering = $state(false);

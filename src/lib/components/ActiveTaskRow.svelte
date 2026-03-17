@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Task } from '$lib/types.js';
 	import InlineEdit from './InlineEdit.svelte';
-	import { dot, rephrase, remove } from '$lib/taskStore.svelte.js';
+	import { dot, rephrase, remove } from '$lib/stores/taskStore.svelte.js';
 
 	let { task }: { task: Task } = $props();
 	let editing = $state(false);

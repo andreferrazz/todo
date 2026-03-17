@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import '../app.css';
-	import { refresh, startListening, stopListening } from '$lib/taskStore.svelte.js';
-	import { startSync } from '$lib/syncStore.svelte.js';
+	import { refresh, startListening, stopListening } from '$lib/stores/taskStore.svelte.js';
+	import { startSync } from '$lib/stores/syncStore.svelte.js';
 
 	let { children }: { children: Snippet } = $props();
 

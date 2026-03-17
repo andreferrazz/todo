@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SyncStatus } from '$lib/types.js';
-	import { getSyncStatus } from '$lib/syncStore.svelte.js';
+	import { getSyncStatus } from '$lib/stores/syncStore.svelte.js';
 
 	const labels: Record<SyncStatus, string> = {
 		synced: 'Synced',

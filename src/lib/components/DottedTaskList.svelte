@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DottedTaskRow from './DottedTaskRow.svelte';
-	import { getDottedTasksList, undotAll } from '$lib/taskStore.svelte.js';
+	import { getDottedTasksList, undotAll } from '$lib/stores/taskStore.svelte.js';
 
 	let tasks = $derived(getDottedTasksList());
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { add } from '$lib/taskStore.svelte.js';
+	import { add } from '$lib/stores/taskStore.svelte.js';
 
 	let text = $state('');
 

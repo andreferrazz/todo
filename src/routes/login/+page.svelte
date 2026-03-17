@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { login } from '$lib/auth.js';
-	import { startSync } from '$lib/syncStore.svelte.js';
+	import { startSync } from '$lib/stores/syncStore.svelte.js';
 
 	let username = $state('');
 	let password = $state('');

@@ -1,4 +1,4 @@
-import { getDb } from './db.js'
+import { watchChanges } from '../repository/taskRepository.js'
 import {
   getAllTasks,
   filterActive,
@@ -11,11 +11,11 @@ import {
   rephraseTask,
   deleteTask,
   undotAll as undotAllTasks,
-} from './services/taskService.js'
-import type { Task } from './types.js'
+} from '../services/taskService.js'
+import type { Task } from '../types.js'
 
 let allTasks: Task[] = $state([])
-let changesListener: PouchDB.Core.Changes<Task> | null = null
+let stopWatching: (() => void) | null = null
 
 const activeTasks = $derived(filterActive(allTasks))
 const dottedTasks = $derived(filterDotted(allTasks))
@@ -66,15 +66,12 @@ export async function undotAll() {
 
 export function startListening() {
   stopListening()
-  changesListener = getDb()
-    .changes({ since: 'now', live: true })
-    .on('change', () => refresh())
-  return changesListener
+  stopWatching = watchChanges(() => refresh())
 }
 
 export function stopListening() {
-  if (changesListener) {
-    changesListener.cancel()
-    changesListener = null
+  if (stopWatching) {
+    stopWatching()
+    stopWatching = null
   }
 }
