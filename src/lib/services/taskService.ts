@@ -1,18 +1,18 @@
-import { getAll, getById, save, saveBulk } from './repository/taskRepository.js'
-import { generateId } from './utils.js'
-import type { Task } from './types.js'
+import { getAll, getById, save, saveBulk } from '../repository/taskRepository.js'
+import { generateId } from '../utils.js'
+import type { Task } from '../types.js'
 
 export async function getAllTasks(): Promise<Task[]> {
   return getAll()
 }
 
-export function getActiveTasks(tasks: Task[]): Task[] {
+export function filterActive(tasks: Task[]): Task[] {
   return tasks
     .filter((t) => t.status === 'active')
     .sort((a, b) => a.position - b.position)
 }
 
-export function getDottedTasks(tasks: Task[]): Task[] {
+export function filterDotted(tasks: Task[]): Task[] {
   return tasks
     .filter((t) => t.status === 'dotted')
     .sort((a, b) => a.position - b.position)

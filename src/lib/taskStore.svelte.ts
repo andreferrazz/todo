@@ -1,8 +1,8 @@
 import { getDb } from './db.js'
 import {
   getAllTasks,
-  getActiveTasks,
-  getDottedTasks,
+  filterActive,
+  filterDotted,
   addTask,
   dotTask,
   undotTask,
@@ -11,14 +11,14 @@ import {
   rephraseTask,
   deleteTask,
   undotAll as undotAllTasks,
-} from './tasks.js'
+} from './services/taskService.js'
 import type { Task } from './types.js'
 
 let allTasks: Task[] = $state([])
 let changesListener: PouchDB.Core.Changes<Task> | null = null
 
-const activeTasks = $derived(getActiveTasks(allTasks))
-const dottedTasks = $derived(getDottedTasks(allTasks))
+const activeTasks = $derived(filterActive(allTasks))
+const dottedTasks = $derived(filterDotted(allTasks))
 
 export function getActiveTasksList(): Task[] {
   return activeTasks

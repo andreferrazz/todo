@@ -5,8 +5,8 @@ import { setDb } from '../../src/lib/db.js'
 import type { Task } from '../../src/lib/types.js'
 import {
   getAllTasks,
-  getActiveTasks,
-  getDottedTasks,
+  filterActive,
+  filterDotted,
   addTask,
   dotTask,
   undotTask,
@@ -15,7 +15,7 @@ import {
   rephraseTask,
   deleteTask,
   undotAll,
-} from '../../src/lib/tasks.js'
+} from '../../src/lib/services/taskService.js'
 
 PouchDB.plugin(memoryAdapter)
 
@@ -60,7 +60,7 @@ describe('addTask', () => {
   })
 })
 
-describe('getActiveTasks', () => {
+describe('filterActive', () => {
   it('filters and sorts by position', async () => {
     await addTask('Task A')
     await addTask('Task B')
@@ -71,7 +71,7 @@ describe('getActiveTasks', () => {
     await dotTask(all.find((t) => t.text === 'Task B')!._id)
 
     const refreshed = await getAllTasks()
-    const active = getActiveTasks(refreshed)
+    const active = filterActive(refreshed)
 
     expect(active).toHaveLength(2)
     expect(active[0].text).toBe('Task A')
@@ -80,7 +80,7 @@ describe('getActiveTasks', () => {
   })
 })
 
-describe('getDottedTasks', () => {
+describe('filterDotted', () => {
   it('filters dotted tasks and sorts by position', async () => {
     await addTask('Task A')
     await addTask('Task B')
@@ -90,7 +90,7 @@ describe('getDottedTasks', () => {
     await dotTask(all[1]._id)
 
     const refreshed = await getAllTasks()
-    const dotted = getDottedTasks(refreshed)
+    const dotted = filterDotted(refreshed)
 
     expect(dotted).toHaveLength(2)
     expect(dotted[0].position).toBeLessThan(dotted[1].position)
@@ -195,8 +195,8 @@ describe('undotAll', () => {
     await undotAll()
 
     const refreshed = await getAllTasks()
-    const dotted = getDottedTasks(refreshed)
-    const active = getActiveTasks(refreshed)
+    const dotted = filterDotted(refreshed)
+    const active = filterActive(refreshed)
 
     expect(dotted).toHaveLength(0)
     expect(active).toHaveLength(3)
