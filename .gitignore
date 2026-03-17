@@ -12,6 +12,12 @@ node_modules
 .DS_Store
 Thumbs.db
 
+# Data
+rezero/
+
+# Secrets
+couchdb/local.ini
+
 # Env
 .env
 .env.*
@@ -21,3 +27,10 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Test
+test-results/
+playwright-report/
+
+# Editor
+.vscode
