@@ -1,12 +1,18 @@
-<script lang="ts">
+<script>
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import { onDestroy } from 'svelte';
+	import { refresh, startListening, stopListening } from '$lib/taskStore.svelte.js';
+	import { initSync } from '$lib/syncStore.svelte.js';
 
 	let { children } = $props();
-</script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+	$effect(() => {
+		refresh();
+		startListening();
+		initSync();
+
+		return () => stopListening();
+	});
+</script>
 
 {@render children()}
