@@ -45,7 +45,7 @@ describe('addTask', () => {
       completedAt: null,
       parentId: null,
     })
-    expect(tasks[0]._id).toMatch(/^task_/)
+    expect(tasks[0]._id).toMatch(/^task_[0-9a-f-]{36}$/)
     expect(tasks[0].createdAt).toBeTruthy()
     expect(tasks[0].updatedAt).toBeTruthy()
   })

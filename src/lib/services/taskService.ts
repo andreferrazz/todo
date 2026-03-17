@@ -2,7 +2,7 @@ import { getAll, getById, save, saveBulk } from '../repository/taskRepository.js
 import type { Task } from '../types.js'
 
 function generateId(): string {
-  return `task_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+  return `task_${crypto.randomUUID()}`
 }
 
 export async function getAllTasks(): Promise<Task[]> {
