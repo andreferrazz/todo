@@ -13,7 +13,7 @@ node_modules
 Thumbs.db
 
 # Data
-rezero/
+/rezero
 
 # Secrets
 couchdb/local.ini

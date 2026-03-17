@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import PouchDB from 'pouchdb'
 import memoryAdapter from 'pouchdb-adapter-memory'
-import { setDb, getDb } from '../../src/lib/db.js'
+import { setDb } from '../../src/lib/db.js'
+import type { Task } from '../../src/lib/types.js'
 import {
   getAllTasks,
   getActiveTasks,
@@ -18,7 +19,7 @@ import {
 
 PouchDB.plugin(memoryAdapter)
 
-let testDb
+let testDb: PouchDB.Database<Task>
 
 beforeEach(() => {
   testDb = new PouchDB(`test-${Date.now()}-${Math.random()}`, { adapter: 'memory' })
@@ -67,7 +68,7 @@ describe('getActiveTasks', () => {
     const all = await getAllTasks()
 
     // Dot one to make sure it's excluded
-    await dotTask(all.find((t) => t.text === 'Task B')._id)
+    await dotTask(all.find((t) => t.text === 'Task B')!._id)
 
     const refreshed = await getAllTasks()
     const active = getActiveTasks(refreshed)
@@ -142,8 +143,8 @@ describe('reenterTask', () => {
     await reenterTask(originalId, 'Rephrased task')
 
     const refreshed = await getAllTasks()
-    const original = refreshed.find((t) => t._id === originalId)
-    const newTask = refreshed.find((t) => t._id !== originalId)
+    const original = refreshed.find((t) => t._id === originalId)!
+    const newTask = refreshed.find((t) => t._id !== originalId)!
 
     expect(original.status).toBe('completed')
     expect(original.completedAt).toBeTruthy()
