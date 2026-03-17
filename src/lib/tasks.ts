@@ -24,21 +24,25 @@ async function getNextPosition(): Promise<number> {
   return positions.length > 0 ? Math.max(...positions) + 1 : 1
 }
 
-export async function addTask(text: string): Promise<PouchDB.Core.Response> {
-  const position = await getNextPosition()
-  const task: Task = {
+function buildTask(text: string, position: number, parentId: string | null = null): Task {
+  const now = new Date().toISOString()
+  return {
     _id: generateId(),
     type: 'task',
     text,
     position,
     status: 'active',
     dottedAt: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: now,
+    updatedAt: now,
     completedAt: null,
-    parentId: null,
+    parentId,
   }
-  return save(task)
+}
+
+export async function addTask(text: string): Promise<PouchDB.Core.Response> {
+  const position = await getNextPosition()
+  return save(buildTask(text, position))
 }
 
 export async function dotTask(id: string): Promise<PouchDB.Core.Response> {
@@ -74,19 +78,7 @@ export async function reenterTask(id: string, newText: string): Promise<PouchDB.
   await save(original)
 
   const position = await getNextPosition()
-  const newTask: Task = {
-    _id: generateId(),
-    type: 'task',
-    text: newText,
-    position,
-    status: 'active',
-    dottedAt: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    completedAt: null,
-    parentId: id,
-  }
-  return save(newTask)
+  return save(buildTask(newText, position, id))
 }
 
 export async function rephraseTask(id: string, newText: string): Promise<PouchDB.Core.Response> {
