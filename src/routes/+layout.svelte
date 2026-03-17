@@ -2,14 +2,14 @@
 	import type { Snippet } from 'svelte';
 	import '../app.css';
 	import { refresh, startListening, stopListening } from '$lib/taskStore.svelte.js';
-	import { initSync } from '$lib/syncStore.svelte.js';
+	import { startSync } from '$lib/syncStore.svelte.js';
 
 	let { children }: { children: Snippet } = $props();
 
 	$effect(() => {
 		refresh();
 		startListening();
-		initSync();
+		startSync();
 
 		return () => stopListening();
 	});

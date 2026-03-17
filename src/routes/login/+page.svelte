@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { login } from '$lib/auth.js';
-	import { initSync } from '$lib/syncStore.svelte.js';
+	import { startSync } from '$lib/syncStore.svelte.js';
 
 	let username = $state('');
 	let password = $state('');
@@ -13,7 +13,7 @@
 
 		try {
 			await login(username.trim(), password);
-			await initSync();
+			await startSync();
 			goto('/');
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Login failed';
