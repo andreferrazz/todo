@@ -1,12 +1,9 @@
-import { getDb } from './db.js'
+import { getAll, getById, save, saveBulk } from './repository/taskRepository.js'
 import { generateId } from './utils.js'
 import type { Task } from './types.js'
 
 export async function getAllTasks(): Promise<Task[]> {
-  const result = await getDb().allDocs({ include_docs: true })
-  return result.rows
-    .filter((row) => row.doc?.type === 'task')
-    .map((row) => row.doc as Task)
+  return getAll()
 }
 
 export function getActiveTasks(tasks: Task[]): Task[] {
@@ -22,7 +19,7 @@ export function getDottedTasks(tasks: Task[]): Task[] {
 }
 
 async function getNextPosition(): Promise<number> {
-  const tasks = await getAllTasks()
+  const tasks = await getAll()
   const positions = tasks.map((t) => t.position)
   return positions.length > 0 ? Math.max(...positions) + 1 : 1
 }
@@ -41,40 +38,40 @@ export async function addTask(text: string): Promise<PouchDB.Core.Response> {
     completedAt: null,
     parentId: null,
   }
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function dotTask(id: string): Promise<PouchDB.Core.Response> {
-  const task = await getDb().get(id)
+  const task = await getById(id)
   task.status = 'dotted'
   task.dottedAt = new Date().toISOString()
   task.updatedAt = new Date().toISOString()
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function undotTask(id: string): Promise<PouchDB.Core.Response> {
-  const task = await getDb().get(id)
+  const task = await getById(id)
   task.status = 'active'
   task.dottedAt = null
   task.updatedAt = new Date().toISOString()
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function completeTask(id: string): Promise<PouchDB.Core.Response> {
-  const task = await getDb().get(id)
+  const task = await getById(id)
   task.status = 'completed'
   task.completedAt = new Date().toISOString()
   task.updatedAt = new Date().toISOString()
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function reenterTask(id: string, newText: string): Promise<PouchDB.Core.Response> {
-  const original = await getDb().get(id)
+  const original = await getById(id)
 
   original.status = 'completed'
   original.completedAt = new Date().toISOString()
   original.updatedAt = new Date().toISOString()
-  await getDb().put(original)
+  await save(original)
 
   const position = await getNextPosition()
   const newTask: Task = {
@@ -89,25 +86,25 @@ export async function reenterTask(id: string, newText: string): Promise<PouchDB.
     completedAt: null,
     parentId: id,
   }
-  return getDb().put(newTask)
+  return save(newTask)
 }
 
 export async function rephraseTask(id: string, newText: string): Promise<PouchDB.Core.Response> {
-  const task = await getDb().get(id)
+  const task = await getById(id)
   task.text = newText
   task.updatedAt = new Date().toISOString()
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function deleteTask(id: string): Promise<PouchDB.Core.Response> {
-  const task = await getDb().get(id)
+  const task = await getById(id)
   task.status = 'deleted'
   task.updatedAt = new Date().toISOString()
-  return getDb().put(task)
+  return save(task)
 }
 
 export async function undotAll(): Promise<Array<PouchDB.Core.Response | PouchDB.Core.Error>> {
-  const tasks = await getAllTasks()
+  const tasks = await getAll()
   const dotted = tasks.filter((t) => t.status === 'dotted')
   const updates = dotted.map((t) => ({
     ...t,
@@ -115,5 +112,5 @@ export async function undotAll(): Promise<Array<PouchDB.Core.Response | PouchDB.
     dottedAt: null,
     updatedAt: new Date().toISOString(),
   }))
-  return getDb().bulkDocs(updates)
+  return saveBulk(updates)
 }
