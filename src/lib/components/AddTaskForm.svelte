@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import { add } from '$lib/taskStore.svelte.js';
 
 	let text = $state('');
 
-	async function handleSubmit(e) {
+	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		const trimmed = text.trim();
 		if (!trimmed) return;

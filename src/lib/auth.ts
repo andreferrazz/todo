@@ -1,6 +1,8 @@
+import type { UserCtx } from './types.js'
+
 const COUCHDB_URL = import.meta.env.VITE_COUCHDB_URL || 'http://localhost:5984'
 
-export async function login(username, password) {
+export async function login(username: string, password: string): Promise<{ ok: boolean; name: string; roles: string[] }> {
   const res = await fetch(`${COUCHDB_URL}/_session`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -15,19 +17,19 @@ export async function login(username, password) {
   return await res.json()
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
   await fetch(`${COUCHDB_URL}/_session`, {
     method: 'DELETE',
     credentials: 'include',
   })
 }
 
-export async function getSession() {
+export async function getSession(): Promise<UserCtx | null> {
   try {
     const res = await fetch(`${COUCHDB_URL}/_session`, {
       credentials: 'include',
     })
-    const data = await res.json()
+    const data = (await res.json()) as { userCtx: UserCtx }
     if (data.userCtx?.name) {
       return data.userCtx
     }
@@ -37,6 +39,6 @@ export async function getSession() {
   }
 }
 
-export function getRemoteDbUrl(username) {
+export function getRemoteDbUrl(username: string): string {
   return `${COUCHDB_URL}/rezero_${username}`
 }

@@ -1,14 +1,15 @@
-<script>
+<script lang="ts">
+	import type { SyncStatus } from '$lib/types.js';
 	import { getSyncStatus } from '$lib/syncStore.svelte.js';
 
-	const labels = {
+	const labels: Record<SyncStatus, string> = {
 		synced: 'Synced',
 		syncing: 'Syncing',
 		offline: 'Offline',
 		local: 'Local only',
 	};
 
-	const colors = {
+	const colors: Record<SyncStatus, string> = {
 		synced: 'bg-green-100 text-green-700',
 		syncing: 'bg-blue-100 text-blue-700',
 		offline: 'bg-yellow-100 text-yellow-700',

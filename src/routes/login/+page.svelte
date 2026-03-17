@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { login } from '$lib/auth.js';
 	import { initSync } from '$lib/syncStore.svelte.js';
@@ -7,7 +7,7 @@
 	let password = $state('');
 	let error = $state('');
 
-	async function handleSubmit(e) {
+	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		error = '';
 
@@ -16,7 +16,7 @@
 			await initSync();
 			goto('/');
 		} catch (err) {
-			error = err.message;
+			error = err instanceof Error ? err.message : 'Login failed';
 		}
 	}
 </script>

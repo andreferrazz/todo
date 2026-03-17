@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import ActiveTaskRow from './ActiveTaskRow.svelte';
 	import { getActiveTasksList } from '$lib/taskStore.svelte.js';
 

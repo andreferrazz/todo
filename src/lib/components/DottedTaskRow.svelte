@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
+	import type { Task } from '$lib/types.js';
 	import InlineEdit from './InlineEdit.svelte';
 	import { undot, complete, reenter } from '$lib/taskStore.svelte.js';
 
-	let { task } = $props();
+	let { task }: { task: Task } = $props();
 	let reentering = $state(false);
 
 	async function handleUndot() {
@@ -13,7 +14,7 @@
 		await complete(task._id);
 	}
 
-	async function handleReenter(newText) {
+	async function handleReenter(newText: string) {
 		await reenter(task._id, newText);
 		reentering = false;
 	}
@@ -28,7 +29,7 @@
 
 	{#if reentering}
 		<InlineEdit
-			value={task.text}
+			initialValue={task.text}
 			onsave={handleReenter}
 			oncancel={() => (reentering = false)}
 		/>

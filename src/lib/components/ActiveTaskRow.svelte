@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
+	import type { Task } from '$lib/types.js';
 	import InlineEdit from './InlineEdit.svelte';
 	import { dot, rephrase, remove } from '$lib/taskStore.svelte.js';
 
-	let { task } = $props();
+	let { task }: { task: Task } = $props();
 	let editing = $state(false);
 
 	async function handleDot() {
 		await dot(task._id);
 	}
 
-	async function handleRephrase(newText) {
+	async function handleRephrase(newText: string) {
 		await rephrase(task._id, newText);
 		editing = false;
 	}
@@ -28,7 +29,7 @@
 
 	{#if editing}
 		<InlineEdit
-			value={task.text}
+			initialValue={task.text}
 			onsave={handleRephrase}
 			oncancel={() => (editing = false)}
 		/>
