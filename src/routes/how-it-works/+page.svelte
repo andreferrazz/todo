@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>How it works - Re-zero</title>
+</svelte:head>
+
 <div class="max-w-xl mx-auto px-4 py-8">
 	<div class="flex items-center justify-between mb-8">
 		<h1 class="text-2xl font-bold text-gray-800">How Re-zero works</h1>

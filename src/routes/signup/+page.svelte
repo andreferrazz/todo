@@ -27,6 +27,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Sign up - Re-zero</title>
+</svelte:head>
+
 <div class="min-h-screen flex items-center justify-center">
 	<div class="max-w-sm w-full px-4">
 		<h1 class="text-2xl font-bold text-gray-800 text-center mb-2">Re-zero</h1>
