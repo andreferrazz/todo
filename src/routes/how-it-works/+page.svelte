@@ -8,7 +8,8 @@
 		<section>
 			<h2 class="text-lg font-semibold text-gray-800 mb-2">What is Resistance Zero?</h2>
 			<p>
-				Resistance Zero (Re-zero) is a time management system created by Mark Forster.
+				Resistance Zero (Re-zero) is a time management system created by
+				<a href="http://markforster.squarespace.com/blog/2022/6/14/resistance-how-to-make-the-most-of-it-the-resistance-zero-sy.html" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 underline">Mark Forster</a>.
 				It is designed to gradually reduce the resistance to harder tasks as the "easy" tasks
 				around them are completed.
 			</p>
