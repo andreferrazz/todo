@@ -10,7 +10,7 @@
 		<h1 class="text-2xl font-bold text-gray-800">Re-zero</h1>
 		<div class="flex items-center gap-3">
 			<SyncBadge />
-			<a href="/info" class="text-sm text-blue-500 hover:text-blue-700 transition-colors">How it works</a>
+			<a href="/how-it-works" class="text-sm text-blue-500 hover:text-blue-700 transition-colors">How it works</a>
 		</div>
 	</div>
 
