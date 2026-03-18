@@ -11,7 +11,9 @@
 
 <div class="max-w-xl mx-auto px-4 py-8">
 	<div class="flex items-center justify-between mb-6">
-		<h1 class="text-2xl font-bold text-gray-800">Re-zer<svg class="inline h-4 w-4 ml-0.5 mb-[-1px]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="14" stroke="#3b82f6" stroke-width="4"/><text x="16" y="22" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="900" fill="#3b82f6">0</text></svg></h1>
+		<h1 class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-black bg-clip-text text-transparent">
+			Re-zero
+		</h1>
 		<div class="flex items-center gap-3">
 			<SyncBadge />
 			<a href="/how-it-works" title="How it works" class="text-gray-400 hover:text-gray-600 transition-colors">
