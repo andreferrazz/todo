@@ -1,21 +1,25 @@
-<script>
-	import { tick } from 'svelte';
+<script lang="ts">
+	interface Props {
+		initialValue?: string
+		onsave?: (text: string) => void
+		oncancel?: () => void
+	}
 
-	let { value = '', onsave, oncancel } = $props();
+	let { initialValue = '', onsave, oncancel }: Props = $props();
 
-	let inputEl = $state(null);
-	let text = $state(value);
+	let inputEl: HTMLInputElement | null = null;
 
 	$effect(() => {
 		if (inputEl) {
+			inputEl.value = initialValue;
 			inputEl.focus();
 			inputEl.select();
 		}
 	});
 
-	function handleKeydown(e) {
+	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'Enter') {
-			inputEl.blur();
+			inputEl?.blur();
 		}
 		if (e.key === 'Escape') {
 			oncancel?.();
@@ -23,8 +27,8 @@
 	}
 
 	function handleBlur() {
-		const trimmed = text.trim();
-		if (trimmed && trimmed !== value) {
+		const trimmed = inputEl?.value.trim() ?? '';
+		if (trimmed && trimmed !== initialValue) {
 			onsave?.(trimmed);
 		} else {
 			oncancel?.();
@@ -34,7 +38,6 @@
 
 <input
 	bind:this={inputEl}
-	bind:value={text}
 	onkeydown={handleKeydown}
 	onblur={handleBlur}
 	class="flex-1 border border-blue-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"

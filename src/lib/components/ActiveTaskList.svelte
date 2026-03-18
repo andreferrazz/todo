@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import ActiveTaskRow from './ActiveTaskRow.svelte';
-	import { getActiveTasksList } from '$lib/taskStore.svelte.js';
+	import { getActiveTasksList } from '$lib/stores/taskStore.svelte.js';
 
 	let tasks = $derived(getActiveTasksList());
 </script>

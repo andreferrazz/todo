@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import AddTaskForm from '$lib/components/AddTaskForm.svelte';
 	import ActiveTaskList from '$lib/components/ActiveTaskList.svelte';
 	import DottedTaskList from '$lib/components/DottedTaskList.svelte';

@@ -1,22 +1,28 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { login } from '$lib/auth.js';
+	import { signup } from '$lib/auth.js';
 	import { startSync } from '$lib/stores/syncStore.svelte.js';
 
 	let username = $state('');
 	let password = $state('');
+	let confirmPassword = $state('');
 	let error = $state('');
 
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		error = '';
 
+		if (password !== confirmPassword) {
+			error = 'Passwords do not match';
+			return;
+		}
+
 		try {
-			await login(username.trim(), password);
+			await signup(username.trim(), password);
 			await startSync();
 			goto('/');
 		} catch (err) {
-			error = err instanceof Error ? err.message : 'Login failed';
+			error = err instanceof Error ? err.message : 'Sign-up failed';
 		}
 	}
 </script>
@@ -24,7 +30,7 @@
 <div class="min-h-screen flex items-center justify-center">
 	<div class="max-w-sm w-full px-4">
 		<h1 class="text-2xl font-bold text-gray-800 text-center mb-2">Re-zero</h1>
-		<p class="text-gray-500 text-sm text-center mb-6">Sign in to sync across devices</p>
+		<p class="text-gray-500 text-sm text-center mb-6">Create an account to sync across devices</p>
 
 		<form onsubmit={handleSubmit} class="space-y-4">
 			<div>
@@ -45,7 +51,18 @@
 					type="password"
 					placeholder="Password"
 					class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-					autocomplete="current-password"
+					autocomplete="new-password"
+					required
+				/>
+			</div>
+			<div>
+				<input
+					id="confirm-password"
+					bind:value={confirmPassword}
+					type="password"
+					placeholder="Confirm password"
+					class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					autocomplete="new-password"
 					required
 				/>
 			</div>
@@ -55,14 +72,11 @@
 			<button
 				type="submit"
 				class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
-			>Sign in</button>
+			>Create account</button>
 		</form>
 
 		<p class="text-center mt-4">
-			<a href="/signup" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">Create an account</a>
-		</p>
-		<p class="text-center mt-2">
-			<a href="/" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">Use without syncing</a>
+			<a href="/login" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">Already have an account? Sign in</a>
 		</p>
 	</div>
 </div>

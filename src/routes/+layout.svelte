@@ -1,15 +1,15 @@
-<script>
+<script lang="ts">
+	import type { Snippet } from 'svelte';
 	import '../app.css';
-	import { onDestroy } from 'svelte';
-	import { refresh, startListening, stopListening } from '$lib/taskStore.svelte.js';
-	import { initSync } from '$lib/syncStore.svelte.js';
+	import { refresh, startListening, stopListening } from '$lib/stores/taskStore.svelte.js';
+	import { startSync } from '$lib/stores/syncStore.svelte.js';
 
-	let { children } = $props();
+	let { children }: { children: Snippet } = $props();
 
 	$effect(() => {
 		refresh();
 		startListening();
-		initSync();
+		startSync();
 
 		return () => stopListening();
 	});
