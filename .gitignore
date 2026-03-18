@@ -16,7 +16,7 @@ Thumbs.db
 /rezero
 
 # Secrets
-couchdb/local.ini
+/couchdb
 
 # Env
 .env
