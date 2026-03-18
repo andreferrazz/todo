@@ -2,6 +2,7 @@
 	import type { Task } from '$lib/types.js';
 	import InlineEdit from './InlineEdit.svelte';
 	import { undot, complete, reenter } from '$lib/stores/taskStore.svelte.js';
+	import { linkify } from '$lib/utils/linkify.js';
 
 	let { task }: { task: Task } = $props();
 	let reentering = $state(false);
@@ -34,7 +35,7 @@
 			oncancel={() => (reentering = false)}
 		/>
 	{:else}
-		<span class="flex-1 text-gray-700">{task.text}</span>
+		<span class="flex-1 text-gray-700">{@html linkify(task.text)}</span>
 		<div class="flex gap-1 max-sm:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity">
 			<button
 				onclick={handleComplete}
