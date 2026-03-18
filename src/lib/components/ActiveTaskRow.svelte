@@ -35,7 +35,7 @@
 		/>
 	{:else}
 		<span class="flex-1 text-gray-700">{task.text}</span>
-		<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+		<div class="flex gap-1 max-sm:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity">
 			<button
 				onclick={() => (editing = true)}
 				class="p-1.5 text-gray-400 hover:text-blue-500 rounded transition-colors"
