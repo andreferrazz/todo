@@ -19,6 +19,12 @@
 	let status = $derived(getSyncStatus());
 </script>
 
+{#if status === 'local'}
+<a href="/login" class="text-xs px-2 py-0.5 rounded-full {colors[status]} hover:bg-gray-200 transition-colors">
+	{labels[status]}
+</a>
+{:else}
 <span class="text-xs px-2 py-0.5 rounded-full {colors[status] || ''}">
 	{labels[status] || status}
 </span>
+{/if}
