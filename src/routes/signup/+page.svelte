@@ -7,6 +7,7 @@
 	let password = $state('');
 	let confirmPassword = $state('');
 	let error = $state('');
+	let loading = $state(false);
 
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
@@ -17,12 +18,15 @@
 			return;
 		}
 
+		loading = true;
+
 		try {
 			await signup(username.trim(), password);
 			await startSync();
 			goto('/');
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Sign-up failed';
+			loading = false;
 		}
 	}
 </script>
@@ -75,8 +79,9 @@
 			{/if}
 			<button
 				type="submit"
-				class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
-			>Create account</button>
+				disabled={loading}
+				class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+			>{loading ? 'Creating account...' : 'Create account'}</button>
 		</form>
 
 		<p class="text-center mt-4">

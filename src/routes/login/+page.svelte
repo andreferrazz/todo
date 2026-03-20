@@ -6,10 +6,12 @@
 	let username = $state('');
 	let password = $state('');
 	let error = $state('');
+	let loading = $state(false);
 
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		error = '';
+		loading = true;
 
 		try {
 			await login(username.trim(), password);
@@ -17,6 +19,7 @@
 			goto('/');
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Login failed';
+			loading = false;
 		}
 	}
 </script>
@@ -58,8 +61,9 @@
 			{/if}
 			<button
 				type="submit"
-				class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
-			>Sign in</button>
+				disabled={loading}
+				class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+			>{loading ? 'Signing in...' : 'Sign in'}</button>
 		</form>
 
 		<p class="text-center mt-4">
