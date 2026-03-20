@@ -1,36 +1,11 @@
-node_modules
-
-# Output
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/build
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Data
-/rezero
-
-# Secrets
-/couchdb
-
 # Env
 .env
 .env.*
 !.env.example
 !.env.test
 
-# Vite
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
+# AI
+.claude/
 
-# Test
-test-results/
-playwright-report/
-
-# Editor
-.vscode
+# other
+rezero/

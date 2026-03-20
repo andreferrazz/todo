@@ -1,8 +1,7 @@
 services:
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./frontend
       args:
         VITE_COUCHDB_URL: ${VITE_COUCHDB_URL}
         VITE_SIGNUP_URL: ${VITE_SIGNUP_URL}
@@ -10,13 +9,14 @@ services:
       - "3001:80"
 
   backend:
-    build: ./signup-proxy
+    build: ./backend
     ports:
       - "3000:3000"
     environment:
       COUCHDB_URL: http://couchdb:5984
       COUCHDB_USER: ${COUCHDB_USER}
-      COUCHDB_PASS: ${COUCHDB_PASSWORD}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      BACKEND_ALLOWED_ORIGINS: ${BACKEND_ALLOWED_ORIGINS:-*}
     depends_on:
       - couchdb
 
