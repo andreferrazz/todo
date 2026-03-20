@@ -2,9 +2,9 @@ import * as http from "http"
 
 const COUCHDB_URL = process.env.COUCHDB_URL;
 const COUCHDB_USER = process.env.COUCHDB_USER;
-const COUCHDB_PASS = process.env.COUCHDB_PASS;
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "*";
-const AUTH = "Basic " + Buffer.from(`${COUCHDB_USER}:${COUCHDB_PASS}`).toString("base64");
+const COUCHDB_PASSWORD = process.env.COUCHDB_PASSWORD;
+const ALLOWED_ORIGIN = process.env.BACKEND_ALLOWED_ORIGINS || "*";
+const AUTH = "Basic " + Buffer.from(`${COUCHDB_USER}:${COUCHDB_PASSWORD}`).toString("base64");
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
