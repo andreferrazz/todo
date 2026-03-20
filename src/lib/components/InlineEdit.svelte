@@ -40,5 +40,5 @@
 	bind:this={inputEl}
 	onkeydown={handleKeydown}
 	onblur={handleBlur}
-	class="flex-1 border border-blue-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+	class="flex-1 border border-blue-300 dark:border-blue-600 rounded px-2 py-1 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 />
