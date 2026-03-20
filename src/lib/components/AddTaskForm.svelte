@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { add } from '$lib/stores/taskStore.svelte.js';
+	import { getTranslations } from '$lib/i18n/index.js';
 
+	let t = $derived(getTranslations());
 	let text = $state('');
 
 	async function handleSubmit(e: SubmitEvent) {
@@ -17,12 +19,12 @@
 		id="add-input"
 		bind:value={text}
 		type="text"
-		placeholder="Add a new task..."
+		placeholder={t.tasks.addPlaceholder}
 		class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 		autocomplete="off"
 	/>
 	<button
 		type="submit"
 		class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
-	>Add</button>
+	>{t.tasks.add}</button>
 </form>

@@ -1,13 +1,16 @@
 <script lang="ts">
 	import type { SyncStatus } from '$lib/types.js';
 	import { getSyncStatus } from '$lib/stores/syncStore.svelte.js';
+	import { getTranslations } from '$lib/i18n/index.js';
 
-	const labels: Record<SyncStatus, string> = {
-		synced: 'Synced',
-		syncing: 'Syncing',
-		offline: 'Offline',
-		local: 'Local only',
-	};
+	let t = $derived(getTranslations());
+
+	let labels: Record<SyncStatus, string> = $derived({
+		synced: t.sync.synced,
+		syncing: t.sync.syncing,
+		offline: t.sync.offline,
+		local: t.sync.local,
+	});
 
 	const colors: Record<SyncStatus, string> = {
 		synced: 'bg-green-100 text-green-700',

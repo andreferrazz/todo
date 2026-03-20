@@ -3,7 +3,9 @@
 	import InlineEdit from './InlineEdit.svelte';
 	import { undot, complete, reenter } from '$lib/stores/taskStore.svelte.js';
 	import { linkify } from '$lib/utils/linkify.js';
+	import { getTranslations } from '$lib/i18n/index.js';
 
+	let t = $derived(getTranslations());
 	let { task }: { task: Task } = $props();
 	let reentering = $state(false);
 
@@ -25,7 +27,7 @@
 	<button
 		onclick={handleUndot}
 		class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500 border-2 border-blue-500 transition-colors"
-		title="Undot this task"
+		title={t.tasks.undotTitle}
 	></button>
 
 	{#if reentering}
@@ -40,13 +42,13 @@
 			<button
 				onclick={handleComplete}
 				class="px-2 py-1 text-xs bg-green-100 text-green-700 hover:bg-green-200 rounded transition-colors"
-				title="Mark as done"
-			>Done</button>
+				title={t.tasks.markDone}
+			>{t.tasks.done}</button>
 			<button
 				onclick={() => (reentering = true)}
 				class="px-2 py-1 text-xs bg-yellow-100 text-yellow-700 hover:bg-yellow-200 rounded transition-colors"
-				title="Re-enter with new text"
-			>Re-enter</button>
+				title={t.tasks.reenterTitle}
+			>{t.tasks.reenter}</button>
 		</div>
 	{/if}
 </div>
