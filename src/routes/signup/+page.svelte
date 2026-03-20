@@ -42,10 +42,10 @@
 	<title>{t.signup.title}</title>
 </svelte:head>
 
-<div class="min-h-screen flex items-center justify-center">
+<div class="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
 	<div class="max-w-sm w-full px-4">
-		<h1 class="text-2xl font-bold text-gray-800 text-center mb-2">Re-zero</h1>
-		<p class="text-gray-500 text-sm text-center mb-6">{t.signup.subtitle}</p>
+		<h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 text-center mb-2">Re-zero</h1>
+		<p class="text-gray-500 dark:text-gray-400 text-sm text-center mb-6">{t.signup.subtitle}</p>
 
 		<form onsubmit={handleSubmit} class="space-y-4">
 			<div>
@@ -54,7 +54,7 @@
 					bind:value={username}
 					type="text"
 					placeholder={t.signup.usernamePlaceholder}
-					class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					autocomplete="username"
 					required
 				/>
@@ -65,7 +65,7 @@
 					bind:value={password}
 					type="password"
 					placeholder={t.signup.passwordPlaceholder}
-					class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					autocomplete="new-password"
 					required
 				/>
@@ -76,7 +76,7 @@
 					bind:value={confirmPassword}
 					type="password"
 					placeholder={t.signup.confirmPasswordPlaceholder}
-					class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm bg-white dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					autocomplete="new-password"
 					required
 				/>
@@ -92,7 +92,7 @@
 		</form>
 
 		<p class="text-center mt-4">
-			<a href="/login" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">{t.signup.alreadyHaveAccount}</a>
+			<a href="/login" class="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">{t.signup.alreadyHaveAccount}</a>
 		</p>
 	</div>
 </div>

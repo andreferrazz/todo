@@ -23,10 +23,10 @@
 	}
 </script>
 
-<div class="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 group">
+<div class="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 group">
 	<button
 		onclick={handleDot}
-		class="flex-shrink-0 w-5 h-5 rounded-full border-2 border-gray-300 hover:border-blue-500 transition-colors"
+		class="flex-shrink-0 w-5 h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-colors"
 		title={t.tasks.dotTitle}
 	></button>
 
@@ -37,11 +37,11 @@
 			oncancel={() => (editing = false)}
 		/>
 	{:else}
-		<span class="flex-1 text-gray-700">{@html linkify(task.text)}</span>
+		<span class="flex-1 text-gray-700 dark:text-gray-200">{@html linkify(task.text)}</span>
 		<div class="flex gap-1 max-sm:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity">
 			<button
 				onclick={() => (editing = true)}
-				class="p-1.5 text-gray-400 hover:text-blue-500 rounded transition-colors"
+				class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-500 rounded transition-colors"
 				title={t.tasks.rephrase}
 			>
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@
 			</button>
 			<button
 				onclick={handleDelete}
-				class="p-1.5 text-gray-400 hover:text-red-500 rounded transition-colors"
+				class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-red-500 rounded transition-colors"
 				title={t.tasks.delete}
 			>
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

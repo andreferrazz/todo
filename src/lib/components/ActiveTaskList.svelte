@@ -9,7 +9,7 @@
 
 <div class="mb-8 space-y-1">
 	{#if tasks.length === 0}
-		<p class="text-gray-400 italic text-sm">{t.tasks.empty}</p>
+		<p class="text-gray-400 dark:text-gray-500 italic text-sm">{t.tasks.empty}</p>
 	{:else}
 		{#each tasks as task (task._id)}
 			<ActiveTaskRow {task} />

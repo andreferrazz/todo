@@ -10,13 +10,13 @@
 
 <div class="max-w-xl mx-auto px-4 py-8">
 	<div class="flex items-center justify-between mb-8">
-		<h1 class="text-2xl font-bold text-gray-800">{t.howItWorks.title}</h1>
-		<a href="/" class="text-sm text-blue-500 hover:text-blue-700 transition-colors">{t.howItWorks.backToTasks}</a>
+		<h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{t.howItWorks.title}</h1>
+		<a href="/" class="text-sm text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">{t.howItWorks.backToTasks}</a>
 	</div>
 
-	<div class="space-y-6 text-gray-700 text-sm leading-relaxed">
+	<div class="space-y-6 text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
 		<section>
-			<h2 class="text-lg font-semibold text-gray-800 mb-2">{t.howItWorks.whatIsTitle}</h2>
+			<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{t.howItWorks.whatIsTitle}</h2>
 			<p>
 				{t.howItWorks.whatIsText}
 				<a href="http://markforster.squarespace.com/blog/2022/6/14/resistance-how-to-make-the-most-of-it-the-resistance-zero-sy.html" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 underline">{t.howItWorks.whatIsAuthor}</a>{t.howItWorks.whatIsTextAfter}
@@ -24,7 +24,7 @@
 		</section>
 
 		<section>
-			<h2 class="text-lg font-semibold text-gray-800 mb-2">{t.howItWorks.principlesTitle}</h2>
+			<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{t.howItWorks.principlesTitle}</h2>
 			<ul class="list-disc list-inside space-y-2">
 				<li>
 					<strong>{t.howItWorks.principleZeroResistance}</strong>{t.howItWorks.principleZeroResistanceText}
@@ -45,7 +45,7 @@
 		</section>
 
 		<section>
-			<h2 class="text-lg font-semibold text-gray-800 mb-2">{t.howItWorks.howToUseTitle}</h2>
+			<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{t.howItWorks.howToUseTitle}</h2>
 			<ol class="list-decimal list-inside space-y-3">
 				<li>
 					<strong>{t.howItWorks.step1Title}</strong>{t.howItWorks.step1Text}
@@ -69,7 +69,7 @@
 		</section>
 
 		<section>
-			<h2 class="text-lg font-semibold text-gray-800 mb-2">{t.howItWorks.whyTitle}</h2>
+			<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{t.howItWorks.whyTitle}</h2>
 			<p>{t.howItWorks.whyText}</p>
 		</section>
 	</div>

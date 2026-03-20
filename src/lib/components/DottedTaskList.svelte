@@ -8,11 +8,11 @@
 </script>
 
 {#if tasks.length > 0}
-	<div class="flex items-center justify-between mb-3 mt-8 pt-6 border-t border-gray-200">
+	<div class="flex items-center justify-between mb-3 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
 		<h2 class="text-sm font-semibold text-blue-600 uppercase tracking-wide">{t.tasks.dottedHeader}</h2>
 		<button
 			onclick={undotAll}
-			class="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+			class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
 		>{t.tasks.undotAll}</button>
 	</div>
 	<div class="space-y-1">
