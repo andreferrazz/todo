@@ -1,25 +1,68 @@
 services:
-  couchdb:
-    image: couchdb:3
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_COUCHDB_URL: ${VITE_COUCHDB_URL}
+        VITE_SIGNUP_URL: ${VITE_SIGNUP_URL}
     ports:
-      - "5984:5984"
-    environment:
-      COUCHDB_USER: admin
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-changeme}
-    volumes:
-      - couchdb_data:/opt/couchdb/data
-      - ./couchdb/local.ini:/opt/couchdb/etc/local.d/local.ini
+      - "3001:80"
 
-  signup-proxy:
+  backend:
     build: ./signup-proxy
     ports:
       - "3000:3000"
     environment:
       COUCHDB_URL: http://couchdb:5984
-      COUCHDB_USER: admin
-      COUCHDB_PASS: ${COUCHDB_PASSWORD:-changeme}
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASS: ${COUCHDB_PASSWORD}
     depends_on:
       - couchdb
 
+  couchdb:
+    image: couchdb:3.5.1
+    ports:
+      - "5984:5984"
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_BIND_ADDRESS: ${COUCHDB_BIND_ADDRESS}
+      COUCHDB_AUTH_SECRET: ${COUCHDB_AUTH_SECRET}
+      COUCHDB_AUTH_TIMEOUT: ${COUCHDB_AUTH_TIMEOUT}
+      COUCHDB_ALLOWED_ORIGINS: ${COUCHDB_ALLOWED_ORIGINS}
+      COUCHDB_DATABASE_PREFIX: ${COUCHDB_DATABASE_PREFIX}
+    configs:
+      - source: couchdb_ini
+        target: /opt/couchdb/etc/local.d/local.ini
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    restart: unless-stopped
+
 volumes:
   couchdb_data:
+
+configs:
+  couchdb_ini:
+    content: |
+      [couchdb]
+      single_node = true
+
+      [chttpd]
+      enable_cors = true
+      bind_address = ${COUCHDB_BIND_ADDRESS}
+
+      [chttpd_auth]
+      secret = ${COUCHDB_AUTH_SECRET}
+      timeout = ${COUCHDB_AUTH_TIMEOUT}
+
+      [cors]
+      origins = ${COUCHDB_ALLOWED_ORIGINS}
+      credentials = true
+      methods = GET, PUT, POST, HEAD, DELETE
+      headers = accept, authorization, content-type, origin, referer, x-csrf-token
+
+      [couch_peruser]
+      enable = true
+      database_prefix = ${COUCHDB_DATABASE_PREFIX}
+      delete_dbs = false
