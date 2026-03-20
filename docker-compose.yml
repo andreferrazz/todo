@@ -6,14 +6,14 @@ services:
         VITE_COUCHDB_URL: ${VITE_COUCHDB_URL}
         VITE_SIGNUP_URL: ${VITE_SIGNUP_URL}
     ports:
-      - "3001:80"
+      - "4000:80"
 
   backend:
     build: ./backend
     ports:
-      - "3000:3000"
+      - "4001:3000"
     environment:
-      COUCHDB_URL: http://couchdb:5984
+      COUCHDB_URL: http://couchdb:4002
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       BACKEND_ALLOWED_ORIGINS: ${BACKEND_ALLOWED_ORIGINS:-*}
@@ -23,7 +23,7 @@ services:
   couchdb:
     image: couchdb:3.5.1
     ports:
-      - "5984:5984"
+      - "4002:5984"
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
