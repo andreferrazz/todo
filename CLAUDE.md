@@ -4,11 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm run dev` — Start dev server
-- `npm run build` — Production build
-- `npm run check` — TypeScript/Svelte type checking
-- `npm run test:unit` — Unit tests (Vitest, tests in `tests/unit/`)
-- `npm run test:e2e` — E2E tests (Playwright, tests in `tests/e2e/`, dev server on port 5178)
+All frontend commands run from the `frontend/` directory:
+
+- `npm --prefix frontend run dev` — Start dev server
+- `npm --prefix frontend run build` — Production build
+- `npm --prefix frontend run check` — TypeScript/Svelte type checking
+- `npm --prefix frontend run test:unit` — Unit tests (Vitest, tests in `frontend/tests/unit/`)
+- `npm --prefix frontend run test:e2e` — E2E tests (Playwright, tests in `frontend/tests/e2e/`, dev server on port 5178)
 
 ## Architecture
 
