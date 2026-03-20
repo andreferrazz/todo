@@ -43,6 +43,9 @@ export default defineConfig({
 			workbox: {
 				globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
 				navigateFallback: 'index.html',
+				additionalManifestEntries: [
+					{ url: 'index.html', revision: Date.now().toString() }
+				],
 			},
 		}),
 	],
