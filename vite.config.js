@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
@@ -7,7 +7,7 @@ export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
-		SvelteKitPWA({
+		VitePWA({
 			registerType: 'autoUpdate',
 			manifest: {
 				name: 'ReZero',
@@ -42,6 +42,7 @@ export default defineConfig({
 			},
 			workbox: {
 				globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
+				navigateFallback: 'index.html',
 			},
 		}),
 	],
