@@ -56,7 +56,7 @@
 			/>
 		{:else}
 			<span class="flex-1 text-gray-700 dark:text-gray-200">{@html linkify(task.text)}</span>
-			<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+			<div class="hidden sm:flex gap-1 opacity-0 sm:group-hover:opacity-100 transition-opacity">
 				<button
 					onclick={() => (editing = true)}
 					class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-blue-500 rounded transition-colors"
